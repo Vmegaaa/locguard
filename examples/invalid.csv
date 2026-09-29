@@ -1,0 +1,8 @@
+key,zh_CN,en_US
+ui.start,开始游戏,Start game
+ui.start,重新开始,Restart
+ui.missing,继续游戏,
+ui.welcome,欢迎你，{name}！,Welcome {player}!
+score.summary,得分：{0},Score: {1}
+reward.repeat,{name}获得{0}金币，{name}再接再厉,{name} earned {0} coins
+,返回菜单,Back to menu

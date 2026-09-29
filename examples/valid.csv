@@ -1,0 +1,7 @@
+key,zh_CN,en_US
+ui.start,开始游戏,Start game
+ui.welcome,欢迎你，{name}！,Welcome {name}!
+score.summary,得分：{0},Score: {0}
+reward.repeat,{name}获得{0}金币，{name}再接再厉,"{name} earned {0} coins, keep going {name}"
+reward.reordered,{name}得到了{0}枚徽章,{0} badges for {name}
+dialog.quote,"他说：""开始吧""","He said: ""Let's begin."""
