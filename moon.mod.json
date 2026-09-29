@@ -1,0 +1,6 @@
+{
+  "name": "locguard/locguard",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "description": "Deterministic localization CSV validation with placeholder parity and actionable diagnostics"
+}
