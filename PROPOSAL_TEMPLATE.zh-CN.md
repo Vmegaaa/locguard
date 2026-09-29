@@ -54,4 +54,4 @@
 
 ## 生态检索记录，仅供核对
 
-2026-09-30 检索了 Mooncakes 页面与 MoonBit 社区 GitHub，关键词包含 CSV、localization/localisation 和 validator。结果包括 [NyaCSV](https://github.com/moonbit-community/NyaCSV) 的 CSV 解析能力，以及 [moonverity](https://mooncakes.io/docs/Wchwch777/moonverity%400.1.2) 的通用校验接口。当前检索不足以证明不存在相似项目，也尚未据此确认赛事资格。LocGuard 拟聚焦 key、空翻译和占位符一致性的本地化语义检查，参赛者仍需对照完整已有功能和正式章程。
+2026-09-30 的聚焦检索已发现 [lampclaw/i18n](https://github.com/lampclaw/moonbit-i18n) 等国际化工具，以及 CSV 解析和质量检查库。缺翻译、带位置的 JSON 诊断与现成项目有明确重叠。检索范围、具体差异和未确认项见 [ECOSYSTEM.md](docs/ECOSYSTEM.md)。不能根据未找到完全相同的功能，就声称已经满足赛事的避免相似项目要求。

@@ -2,7 +2,7 @@
 
 用 MoonBit 检查游戏和应用的本地化 CSV：重复 key、缺失翻译，以及跨语言的占位符遗漏或重复。文件留在本地，无需账户或外部云服务。
 
-开发状态：初始实现。下列命令是预期的使用方式，提交前需以实际运行和 CI 结果核实。本文不代表测试已经通过。
+开发状态：0.1.0 本地验证通过。2026-09-30 使用 MoonBit 0.1.20260920：JavaScript 36 项测试、WebAssembly GC 34 项测试和 15 项 CLI 集成检查全部通过，源码类型检查无警告。公开 CI 尚未运行；具体环境和命令见 [验证记录](docs/VERIFICATION.md)。
 
 ## 快速开始
 
@@ -58,7 +58,9 @@ LocGuard 检查表格结构与占位符一致性，不判断翻译质量。当�
 
 ## 生态与设计
 
-MoonBit 社区已有 [NyaCSV](https://github.com/moonbit-community/NyaCSV) 等 CSV 解析项目。LocGuard 的用途是检查本地化表格的语义约束，提供可复用的检查核心和适合 CI 的诊断输出。这里不主张它是生态中的唯一或首个此类项目。
+MoonBit 社区已有 [NyaCSV](https://github.com/moonbit-community/NyaCSV) 等 CSV 解析项目，也有 [lampclaw/i18n](https://github.com/lampclaw/moonbit-i18n) 等国际化工具。LocGuard 聚焦 `key + 语言列` 的 CSV 和简单占位符名称、次数的一致性检查。缺翻译、位置诊断和 JSON 输出与现成工具有重叠，具体记录见 [ECOSYSTEM.md](docs/ECOSYSTEM.md)。这里不主张它是生态中的唯一或首个此类项目，也不据此保证赛事资格。
+
+相邻项目的具体源码行为尚未完成核查，不能把文档中尚未确认的 CSV、重复 key 或占位符次数规则写成它们不支持的功能。
 
 最小范围先围绕小型 UTF-8 本地化表建立可复现的测试。后续可以根据实际问题讨论其他资源格式或与现有解析库集成，不承诺尚未实现的功能或性能。
 

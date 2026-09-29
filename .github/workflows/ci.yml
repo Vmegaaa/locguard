@@ -18,10 +18,10 @@ jobs:
       - name: Show actual toolchain version
         run: moon version --all
       - name: Typecheck source and public interfaces
-        run: moon check --target js
+        run: moon check --target js --deny-warn
       - name: Test library and CLI argument handling
-        run: moon test --target js
+        run: moon test --target js --deny-warn
       - name: Verify library on WebAssembly GC
-        run: moon test --target wasm-gc
+        run: moon test --target wasm-gc --deny-warn
       - name: Test real CLI behavior
         run: node scripts/smoke.mjs
