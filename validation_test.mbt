@@ -56,3 +56,9 @@ test "JSON diagnostics are valid and deterministic with unusual keys" {
   assert_eq(json, report.json())
   assert_true(json.contains("missing_translation"))
 }
+
+test "Unicode whitespace does not disguise empty translations keys or locales" {
+  let translations = validate("key,en_US,zh_CN\na,Hello,\u{3000}\nb,\u{a0},你好\n\u{2003},Hi,你好\n")
+  assert_eq(translations.issues.map(fn(i) { i.code }), ["missing_translation", "empty_source", "empty_key"])
+  assert_eq(validate("key,en_US,\u{3000}\na,Hi,你好\n").issues[0].code, "header")
+}

@@ -24,7 +24,12 @@ pub fn Report::json(self : Report) -> String {
 
 fn blank(input : String) -> Bool {
   for c in input.to_array() {
-    if c != ' ' && c != '\t' && c != '\r' && c != '\n' {
+    // Unicode White_Space, including nonbreaking and full-width spaces.
+    let whitespace = ('\t' <= c && c <= '\r') || c == ' ' ||
+      c == '\u{85}' || c == '\u{a0}' || c == '\u{1680}' ||
+      ('\u{2000}' <= c && c <= '\u{200a}') || c == '\u{2028}' ||
+      c == '\u{2029}' || c == '\u{202f}' || c == '\u{205f}' || c == '\u{3000}'
+    if !whitespace {
       return false
     }
   }
