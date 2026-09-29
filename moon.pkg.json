@@ -1,7 +1,0 @@
-{
-  "import": [
-    "locguard/locguard/csv",
-    "locguard/locguard/placeholders",
-    "moonbitlang/core/json"
-  ]
-}

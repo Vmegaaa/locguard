@@ -1,0 +1,10 @@
+supported_targets = "js"
+
+import {
+  "locguard/locguard",
+}
+
+options(
+  "is-main": true,
+  link: { "js": { "format": "cjs" } },
+)

@@ -1,6 +1,0 @@
-{
-  "is-main": true,
-  "supported-targets": "js",
-  "import": ["locguard/locguard"],
-  "link": { "js": { "format": "cjs" } }
-}

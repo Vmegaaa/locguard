@@ -1,4 +1,4 @@
-/// Extract brace placeholders as a sorted multiset of their exact names.
+/// Extract brace placeholders as an ASCII lexical sorted multiset of their exact names.
 ///
 /// Supported forms are `{name}` and `{0}`. Named identifiers contain only ASCII
 /// letters, digits, and underscores and start with a letter or underscore.
@@ -6,6 +6,7 @@
 /// Duplicate placeholders are preserved so missing repetitions remain visible.
 /// ICU messages, format specifiers, and malformed braces return an error.
 /// Error positions count Unicode characters, starting at one.
+
 ///|
 pub fn extract(input : String) -> Result[Array[String], String] {
   let chars = input.to_array()
@@ -19,7 +20,7 @@ pub fn extract(input : String) -> Result[Array[String], String] {
       }
       let start = i
       i += 1
-      let name_buf = StringBuilder::new()
+      let name_buf = StringBuilder()
       let mut first = true
       let mut positional = false
       let mut valid = true
@@ -32,7 +33,9 @@ pub fn extract(input : String) -> Result[Array[String], String] {
           return Err("unsupported format specifier at character \{start + 1}")
         }
         if c == '{' {
-          return Err("invalid placeholder name: nested opening brace at character \{i + 1}")
+          return Err(
+            "invalid placeholder name: nested opening brace at character \{i + 1}",
+          )
         }
         let digit = '0' <= c && c <= '9'
         let letter = ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')
@@ -52,7 +55,9 @@ pub fn extract(input : String) -> Result[Array[String], String] {
         return Err("unclosed placeholder at character \{start + 1}")
       }
       if first {
-        return Err("invalid placeholder name: empty name at character \{start + 1}")
+        return Err(
+          "invalid placeholder name: empty name at character \{start + 1}",
+        )
       }
       if !valid {
         return Err("invalid placeholder name at character \{start + 1}")
@@ -69,6 +74,6 @@ pub fn extract(input : String) -> Result[Array[String], String] {
       i += 1
     }
   }
-  names.sort()
+  names.sort_by((a, b) => a.lexical_compare(b))
   Ok(names)
 }

@@ -1,23 +1,43 @@
+///|
 /// A parsed CSV record and its one-based starting physical line.
 pub(all) struct Row {
   fields : Array[String]
   line : Int
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
+///|
+#deprecated
+pub extend Row with Eq::{equal, not_equal}
+
+///|
+#deprecated
+pub extend Row with Debug::{to_repr}
+
+///|
 /// A syntax error. Columns count Unicode code points, starting at one.
 pub(all) struct ParseError {
   line : Int
   column : Int
   message : String
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
-enum FieldState {
+///|
+#deprecated
+pub extend ParseError with Eq::{equal, not_equal}
+
+///|
+#deprecated
+pub extend ParseError with Debug::{to_repr}
+
+///|
+priv enum FieldState {
   Start
   Unquoted
   Quoted
   Closed
 } derive(Eq)
 
+///|
 /// Parse comma-separated records using RFC 4180 quoting rules.
 ///
 /// Both LF and CRLF record endings are accepted. Quoted content, including
@@ -87,12 +107,16 @@ pub fn parse(input : String) -> Result[Array[Row], ParseError] {
     } else if ch == '\r' || ch == '\n' {
       if ch == '\r' {
         if offset + 1 >= chars.length() || chars[offset + 1] != '\n' {
-          return Err({ line, column, message: "Bare carriage return outside a quoted field" })
+          return Err({
+            line,
+            column,
+            message: "Bare carriage return outside a quoted field",
+          })
         }
         offset += 1
       }
       fields.push(field.to_string())
-      rows.push({ fields, line: row_line })
+      rows.push({ fields, line: row_line, })
       fields = []
       field = StringBuilder()
       state = Start
@@ -102,10 +126,14 @@ pub fn parse(input : String) -> Result[Array[Row], ParseError] {
       column = 1
       row_line = line
     } else if state == Closed {
-      return Err({ line, column, message: "Expected a comma or record ending after a closing quote" })
+      return Err({
+        line,
+        column,
+        message: "Expected a comma or record ending after a closing quote",
+      })
     } else if ch == '"' {
       if state == Unquoted {
-        return Err({ line, column, message: "Quote inside an unquoted field" })
+        return Err({ line, column, message: "Quote inside an unquoted field", })
       }
       state = Quoted
       record_started = true
@@ -130,7 +158,7 @@ pub fn parse(input : String) -> Result[Array[Row], ParseError] {
   }
   if record_started {
     fields.push(field.to_string())
-    rows.push({ fields, line: row_line })
+    rows.push({ fields, line: row_line, })
   }
   Ok(rows)
 }
