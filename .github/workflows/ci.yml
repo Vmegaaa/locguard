@@ -17,6 +17,8 @@ jobs:
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
       - name: Show actual toolchain version
         run: moon version --all
+      - name: Typecheck source and public interfaces
+        run: moon check --target js
       - name: Test library and CLI argument handling
         run: moon test --target js
       - name: Verify library on WebAssembly GC
