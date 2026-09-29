@@ -2,7 +2,7 @@
 
 用 MoonBit 检查游戏和应用的本地化 CSV：重复 key、缺失翻译，以及跨语言的占位符遗漏或重复。文件留在本地，无需账户或外部云服务。
 
-开发状态：0.1.0 本地验证通过。2026-09-30 使用 MoonBit 0.1.20260920：JavaScript 36 项测试、WebAssembly GC 34 项测试和 15 项 CLI 集成检查全部通过，源码类型检查无警告。公开 CI 尚未运行；具体环境和命令见 [验证记录](docs/VERIFICATION.md)。
+开发状态：0.1.0 本地验证通过。2026-09-30 使用 MoonBit 0.1.20260920：JavaScript 36 项测试、WebAssembly GC 34 项测试和 15 项 CLI 集成检查全部通过，源码类型检查无警告。[公开 GitHub CI](https://github.com/Vmegaaa/locguard/actions/runs/36643526161) 也已通过；具体环境和命令见 [验证记录](docs/VERIFICATION.md)。
 
 ## 快速开始
 
