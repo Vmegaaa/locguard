@@ -23,8 +23,8 @@ const artifacts = ['_build', 'target'].flatMap(folder => findMain(path.join(root
 assert.equal(artifacts.length, 1, `Expected one CLI build artifact, found: ${artifacts}`);
 const binary = artifacts[0];
 let checked = 0;
-function run(args, exitCode) {
-  const result = spawnSync(process.execPath, [binary, ...args], { cwd: root, encoding: 'utf8' });
+function run(args, exitCode, cwd = root) {
+  const result = spawnSync(process.execPath, [binary, ...args], { cwd, encoding: 'utf8' });
   assert.equal(result.status, exitCode, `Unexpected exit for ${args}: ${result.error || result.stderr || result.stdout}`);
   checked++;
   return result;
@@ -49,7 +49,10 @@ assert.match(run(['--source', '--json', 'examples/valid.csv'], 2).stderr, /local
 assert.match(run(['not-a-real-file.csv'], 2).stderr, /Cannot read/);
 assert.match(run(['examples'], 2).stderr, /regular file/);
 
-const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'locguard-smoke-'));
+const tempRoot = fs.realpathSync(os.tmpdir());
+const scratch = fs.mkdtempSync(path.join(tempRoot, 'locguard-smoke-'));
+const safeScratch = fs.realpathSync(scratch);
+assert.equal(path.dirname(safeScratch), tempRoot);
 try {
   const nonUtf8 = path.join(scratch, 'invalid-utf8.csv');
   fs.writeFileSync(nonUtf8, Buffer.from([0x6b, 0x65, 0x79, 0x2c, 0xff]));
@@ -59,8 +62,12 @@ try {
   const report = JSON.parse(run(['--json', malformed], 1).stdout);
   assert.equal(report.issues[0].code, 'csv');
   assert.equal(report.issues[0].line, 2);
+  for (const filename of ['--help', '--version']) {
+    fs.writeFileSync(path.join(safeScratch, filename), 'key,en_US,zh_CN\na,Hi,你好\n');
+    assert.equal(JSON.parse(run(['--json', '--', filename], 0, safeScratch).stdout).rows_checked, 1);
+  }
 } finally {
   // Only remove the exact temporary directory created above.
-  fs.rmSync(scratch, { recursive: true, force: true });
+  fs.rmSync(safeScratch, { recursive: true, force: true });
 }
 console.log(`CLI integration checks passed: ${checked}`);

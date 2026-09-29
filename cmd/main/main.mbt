@@ -67,6 +67,7 @@ fn parse_args(args : FixedArray[String]) -> Result[Options, String] {
 fn main {
   let args = arguments()
   for arg in args {
+    if arg == "--" { break }
     if arg == "--help" {
       println(usage())
       return
